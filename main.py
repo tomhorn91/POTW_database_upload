@@ -69,16 +69,50 @@ GTIN_TO_PRODUCT = {
     '10068400002342': knorrTomatoSoupMix,
 }
 
+youtube_links = {
+    '10048001145433': 'https://www.youtube.com/watch?v=gtuwTL9LRRc',
+    '10037500000329': 'https://www.youtube.com/watch?v=ohIT6Mbmu2Y',
+    '10037500000541': 'https://www.youtube.com/watch?v=ohIT6Mbmu2Y',
+    '10068400001994': 'https://youtu.be/CS2eL38BqX8',
+    '10068400002236': 'https://youtu.be/CS2eL38BqX8',
+    '10068400002342': 'https://youtu.be/CS2eL38BqX8',
+    '10048001010724': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
+    '10048001010731': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
+    '10048001265308': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
+    '10048001356969': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
+    '10048001370491': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
+}
+
+create_table = '''
+-- auto-generated definition
+create table productoftheweek
+(
+    id                      int auto_increment
+        primary key,
+    productName             varchar(64)          not null,
+    gtin                    varchar(32)          not null,
+    productBrand            varchar(64)          not null,
+    distributorName         varchar(64)          not null,
+    lastDisplayed           date                 null,
+    currentProductOfTheWeek tinyint(1) default 0 not null,
+    productImage            longblob             null,
+    youtubeLink             varchar(64)          null,
+    specSheetImage          longblob             null,
+    constraint productoftheweek_index_uindex
+        unique (id)
+);
+'''
 
 class InsertImagesToDataBase:
     def __init__(self):
         self.connection = self.get_connection()
         self.cursor = self.connection.cursor()
         self.database = 'productoftheweek'
-        self.query = 'insert into productoftheweek (productName, gtin, productBrand, distributorName, productImage) ' \
-                     'values(%s, %s, %s, %s, %s) '
+        self.main_query = 'insert into productoftheweek (productName, gtin, productBrand, distributorName, productImage, specSheetImage, youtubeLink) ' \
+                          'values(%s, %s, %s, %s, %s, %s, %s) '
 
         self.photos_dir = Path('POTW Front of Pack Shots')
+        self.spec_sheet_dir = Path('spec_sheets')
 
     @staticmethod
     def get_connection():
@@ -95,14 +129,26 @@ class InsertImagesToDataBase:
         return num if '.' not in num else num.split('.')[0]
 
     def insert_photos(self):
-        self.cursor.execute('truncate table productoftheweek;')
+        self.cursor.execute('drop table if exists productoftheweek;')
+        self.cursor.execute(create_table);
         for photo in Path.iterdir(self.photos_dir):
             gtin = self.get_gtin(photo.name)
             item = GTIN_TO_PRODUCT[gtin]
 
+            spec_sheet_blob = None
+            youtube_link = None
+
+            if gtin == '10048001005508':
+                with open(self.spec_sheet_dir / '10048001005508 - KNORR BROWN GRAY MIX.pdf', 'rb') as file:
+                    spec_sheet_blob = file.read()
+
+            if gtin in youtube_links.keys():
+                youtube_link = youtube_links[gtin]
+
             with open(photo, 'rb') as photo_file:
                 blob = photo_file.read()
-                self.cursor.execute(self.query, (item.product_name, item.gtin, item.product_brand, 'Unilever', blob))
+                self.cursor.execute(self.main_query, (
+                    item.product_name, item.gtin, item.product_brand, 'Unilever', blob, spec_sheet_blob, youtube_link))
 
         self.connection.commit()
 
@@ -118,4 +164,6 @@ class InsertImagesToDataBase:
 if __name__ == '__main__':
     db = InsertImagesToDataBase()
     db.insert_photos()
+    # db.insert_spec_sheets()
+
     # db.show_photo()
