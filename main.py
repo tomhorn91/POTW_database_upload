@@ -13,13 +13,12 @@ class Product:
     product_name: str
 
 
-knorrSeafoodBase = Product('048001014329', 'Knorr', 'Ultimate Seafood Liquid Concentrate Base')
-knorrCaldoBoullion = Product('048001038530', 'Knorr', 'Shrimp Bouillon')
-knorrCaldoTomate = Product('048001765450', 'Knorr', 'Tomato Bouillon With Chicken Flavor')
+knorrSeafoodBase = Product('10048001014326', 'Knorr', 'Ultimate Seafood Liquid Concentrate Base')
+knorrCaldoBoullion = Product('10048001038537', 'Knorr', 'Shrimp Bouillon')
+knorrCaldoTomate = Product('10048001761459', 'Knorr', 'Tomato Bouillon With Chicken Flavor')
 leGoutCreamSoupBase = Product('10037500000329', 'Le Gout', 'Cream Soup Base')
-leGoutCreamSoupBaseBucket = Product('10037500000541', 'Le Gout', 'Cream Soup Base')
 knorrBrownGravyMix = Product('10048001005508', 'Knorr', 'Brown Gravy Mix')
-knorrHollandaiseSauceMix = Product('10048001005805', 'Knorr', 'Hollandaise Sauce Mix')
+knorrHollandaiseSauceMix = Product('10048001005829', 'Knorr', 'Hollandaise Sauce Mix')
 hellmansVeganMayo = Product('10048001010724', 'Hellman\'s', 'Vegan Dressing & Sandwich Spread')
 hellmansVeganMayo2 = Product('10048001010731', 'Best Foods', 'Vegan Dressing & Sandwich Spread')
 knorrAlfredoPastaSauceMix = Product('10048001013305', 'Knorr', 'Alfredo Pasta Sauce Mix')
@@ -41,13 +40,12 @@ knorrVegChiliMix = Product('10068400002236', 'Knorr', 'Three Bean Vegetable Chil
 knorrTomatoSoupMix = Product('10068400002342', 'Knorr', 'Tomato Bisque with Basil Soup Mix')
 
 GTIN_TO_PRODUCT = {
-    '048001014329': knorrSeafoodBase,
-    '048001038530': knorrCaldoBoullion,
-    '048001765450': knorrCaldoTomate,
+    '10048001014326': knorrSeafoodBase,
+    '10048001038537': knorrCaldoBoullion,
+    '10048001761459': knorrCaldoTomate,
     '10037500000329': leGoutCreamSoupBase,
-    '10037500000541': leGoutCreamSoupBaseBucket,
     '10048001005508': knorrBrownGravyMix,
-    '10048001005805': knorrHollandaiseSauceMix,
+    '10048001005829': knorrHollandaiseSauceMix,
     '10048001010724': hellmansVeganMayo,
     '10048001010731': hellmansVeganMayo2,
     '10048001013305': knorrAlfredoPastaSauceMix,
@@ -72,7 +70,6 @@ GTIN_TO_PRODUCT = {
 youtube_links = {
     '10048001145433': 'https://www.youtube.com/watch?v=gtuwTL9LRRc',
     '10037500000329': 'https://www.youtube.com/watch?v=ohIT6Mbmu2Y',
-    '10037500000541': 'https://www.youtube.com/watch?v=ohIT6Mbmu2Y',
     '10068400001994': 'https://youtu.be/CS2eL38BqX8',
     '10068400002236': 'https://youtu.be/CS2eL38BqX8',
     '10068400002342': 'https://youtu.be/CS2eL38BqX8',
@@ -81,6 +78,38 @@ youtube_links = {
     '10048001265308': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
     '10048001356969': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
     '10048001370491': 'https://www.youtube.com/watch?v=rkOfYSrVpR0',
+}
+
+product_links = {
+    'https://www.foodservicedirect.com/bases': ['10048001509655',
+                                                '10048001503363',
+                                                '10048001510170'],
+    'https://www.foodservicedirect.com/cream-soup-bases': ['10037500000329'],
+    'https://www.foodservicedirect.com/foh-mayo': ['10048001357539',
+                                                   '10048001370507',
+                                                   '10048001370491',
+                                                   '10048001356969', ],
+    'https://www.foodservicedirect.com/boh-mayo': ['10048001265742',
+                                                   '10048001265308', ],
+    'https://www.foodservicedirect.com/vegan-mayo': ['10048001010724',
+                                                     '10048001010731'],
+    'https://www.foodservicedirect.com/alfredo': ['10048001013305'],
+    'https://www.foodservicedirect.com/caldo': ['10048001038537',
+                                                '10048001759456',
+                                                '10048001760452',
+                                                '10048001039091',
+                                                '10048001761459'],
+    'https://www.foodservicedirect.com/demi': ['10048001386737'],
+    'https://www.foodservicedirect.com/hollandaise': ['10048001005829'],
+    'https://www.foodservicedirect.com/liquid-concentrated-bases': ['10048001145440',
+                                                                    '10048001145433',
+                                                                    '10048001014326',
+                                                                    '10048001145457'],
+    'https://www.foodservicedirect.com/single-knorr-professional-brown-gravy-mix-6-83-ounce-1-each-23044361.html':
+        ['10048001005508'],
+    'https://www.foodservicedirect.com/soup-du-jour': ['10068400002236',
+                                                       '10068400001994',
+                                                       '10068400002342,'],
 }
 
 create_table = '''
@@ -98,17 +127,32 @@ create table productoftheweek
     productImage            longblob             null,
     youtubeLink             varchar(64)          null,
     specSheetImage          longblob             null,
+    sampleLink              varchar(64)          null,  
     constraint productoftheweek_index_uindex
         unique (id)
 );
 '''
+
+create_sample_table = '''
+create table productoftheweek_samples
+(
+    id                   int auto_increment
+        primary key,
+    restaurantId         bigint      not null,
+    productOfTheWeekGtin varchar(64) not null,
+    constraint productoftheweek_samples_id_uindex
+        unique (id)
+);
+'''
+
 
 class InsertImagesToDataBase:
     def __init__(self):
         self.connection = self.get_connection()
         self.cursor = self.connection.cursor()
         self.database = 'productoftheweek'
-        self.main_query = 'insert into productoftheweek (productName, gtin, productBrand, distributorName, productImage, specSheetImage, youtubeLink) ' \
+        self.main_query = 'insert into productoftheweek (productName, gtin, productBrand, distributorName, ' \
+                          'productImage, specSheetImage, youtubeLink) ' \
                           'values(%s, %s, %s, %s, %s, %s, %s) '
 
         self.photos_dir = Path('POTW Front of Pack Shots')
@@ -130,7 +174,10 @@ class InsertImagesToDataBase:
 
     def insert_photos(self):
         self.cursor.execute('drop table if exists productoftheweek;')
-        self.cursor.execute(create_table);
+        self.cursor.execute(create_table)
+        self.cursor.execute('drop table if exists productoftheweek_samples;')
+        self.cursor.execute(create_sample_table)
+
         for photo in Path.iterdir(self.photos_dir):
             gtin = self.get_gtin(photo.name)
             item = GTIN_TO_PRODUCT[gtin]
