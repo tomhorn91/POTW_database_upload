@@ -24,7 +24,7 @@ hellmansVeganMayo2 = Product('10048001010731', 'Best Foods', 'Vegan Dressing & S
 knorrAlfredoPastaSauceMix = Product('10048001013305', 'Knorr', 'Alfredo Pasta Sauce Mix')
 knorrBeefBoullon = Product('10048001039091', 'Knorr', 'Beef Flavor Bouillon')
 knorrChickenBase = Product('10048001145433', 'Knorr', 'Chicken Base')
-knorrBeefBase = Product('10048001145440', 'Knorr', 'Beef Base')
+knorrBeefBase = Product('10048001509655', 'Knorr', 'Beef Base')
 knorrVegBase = Product('10048001145457', 'Knorr', 'Vegetable Base')
 hellmansMayoGallon = Product('10048001265308', 'Hellman\'s', 'Mayonnaise')
 bestFoodsMayoGallon = Product('10048001265742', 'Best Foods', 'Mayonnaise')
@@ -51,7 +51,7 @@ GTIN_TO_PRODUCT = {
     '10048001013305': knorrAlfredoPastaSauceMix,
     '10048001039091': knorrBeefBoullon,
     '10048001145433': knorrChickenBase,
-    '10048001145440': knorrBeefBase,
+    '10048001509655': knorrBeefBase,
     '10048001145457': knorrVegBase,
     '10048001265308': hellmansMayoGallon,
     '10048001265742': bestFoodsMayoGallon,
@@ -127,7 +127,7 @@ create table productoftheweek
     productImage            longblob             null,
     youtubeLink             varchar(64)          null,
     specSheetImage          longblob             null,
-    sampleLink              varchar(64)          null,  
+    productLink             varchar(128)         null,  
     constraint productoftheweek_index_uindex
         unique (id)
 );
@@ -199,6 +199,13 @@ class InsertImagesToDataBase:
 
         self.connection.commit()
 
+    def insert_product_links(self):
+        for k, v in product_links.items():
+            query = 'update productoftheweek set productLink = %s where gtin = %s;'
+            for gtin in v:
+                self.cursor.execute(query, (k, gtin))
+                self.connection.commit()
+
     def show_photo(self):
         self.cursor.execute('select productImage from productoftheweek where id = 27;')
         data = self.cursor.fetchall()
@@ -211,6 +218,7 @@ class InsertImagesToDataBase:
 if __name__ == '__main__':
     db = InsertImagesToDataBase()
     db.insert_photos()
+    db.insert_product_links()
     # db.insert_spec_sheets()
 
     # db.show_photo()
