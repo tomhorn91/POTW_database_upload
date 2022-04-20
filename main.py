@@ -112,6 +112,34 @@ product_links = {
                                                        '10068400002342,'],
 }
 
+spec_sheets = {
+     'Best Foods_FOH Mayo_selling story_editable_210310_english.pdf': ['10048001265742',
+                                                                       '10048001357539',
+                                                                       '10048001370507'],
+     'HLMN_Vegan Mayo_Selling Story 1_editable_211101_english.pptx.pdf': ['10048001010724',
+                                                                          '10048001010731'],
+     'Knorr Professional_Alfredo Sauce Just Add Water_210910_English.pdf': ['10048001013305'],
+     'Knorr Professional_Caldo_Selling Story_2079_English.pdf': ['10048001038537',
+                                                                 '10048001759456',
+                                                                 '10048001760452',
+                                                                 '10048001039091',
+                                                                 '10048001761459'],
+     'Knorr Professional_Demi Glace_Selling Story_20714_English.pdf': ['10048001386737'],
+     'Knorr Professional_Hollandaise_ Selling Story _21915_English.pdf': ['10048001005829'],
+     'Knorr Professional_Liquid Concentrated Bases_Selling Story_20122_English.pdf': ['10048001145440',
+                                                                                      '10048001145433',
+                                                                                      '10048001014326',
+                                                                                      '10048001145457'],
+     'Knorr Professional_Selling Story_Gravies_Customizable_191218_English.pdf': ['10048001005508'],
+     'Knorr Professional_Soup du Jour_Selling Story_Customizable_210727_English.pdf.pdf': ['10068400002236',
+                                                                                           '10068400001994',
+                                                                                           '10068400002342'],
+     'Knorr Professional_Ultimate Bases_Selling Story_2079_English.pdf': ['10048001509655',
+                                                                          '10048001503363',
+                                                                          '10048001510170'],
+     'LeGout_Cream Soup Base _Selling Story_2078_English.pdf': ['10037500000329'],
+}
+
 create_table = '''
 -- auto-generated definition
 create table productoftheweek
@@ -152,8 +180,8 @@ class InsertImagesToDataBase:
         self.cursor = self.connection.cursor()
         self.database = 'productoftheweek'
         self.main_query = 'insert into productoftheweek (productName, gtin, productBrand, distributorName, ' \
-                          'productImage, specSheetImage, youtubeLink) ' \
-                          'values(%s, %s, %s, %s, %s, %s, %s) '
+                          'productImage, youtubeLink) ' \
+                          'values(%s, %s, %s, %s, %s, %s) '
 
         self.photos_dir = Path('POTW Front of Pack Shots')
         self.spec_sheet_dir = Path('spec_sheets')
@@ -182,12 +210,7 @@ class InsertImagesToDataBase:
             gtin = self.get_gtin(photo.name)
             item = GTIN_TO_PRODUCT[gtin]
 
-            spec_sheet_blob = None
             youtube_link = None
-
-            if gtin == '10048001005508':
-                with open(self.spec_sheet_dir / '10048001005508 - KNORR BROWN GRAY MIX.pdf', 'rb') as file:
-                    spec_sheet_blob = file.read()
 
             if gtin in youtube_links.keys():
                 youtube_link = youtube_links[gtin]
@@ -195,7 +218,7 @@ class InsertImagesToDataBase:
             with open(photo, 'rb') as photo_file:
                 blob = photo_file.read()
                 self.cursor.execute(self.main_query, (
-                    item.product_name, item.gtin, item.product_brand, 'Unilever', blob, spec_sheet_blob, youtube_link))
+                    item.product_name, item.gtin, item.product_brand, 'Unilever', blob, youtube_link))
 
         self.connection.commit()
 
@@ -205,6 +228,18 @@ class InsertImagesToDataBase:
             for gtin in v:
                 self.cursor.execute(query, (k, gtin))
                 self.connection.commit()
+
+    def insert_spec_sheets(self):
+        base_path = Path('selling_stories')
+        for k, v in spec_sheets.items():
+            query = 'update productoftheweek set specSheetImage = %s where gtin = %s;'
+            filename = base_path / k
+
+            with open(filename, 'rb') as photo_file:
+                blob = photo_file.read()
+                for gtin in v:
+                    self.cursor.execute(query, (blob, gtin))
+                    self.connection.commit()
 
     def show_photo(self):
         self.cursor.execute('select productImage from productoftheweek where id = 27;')
@@ -219,6 +254,6 @@ if __name__ == '__main__':
     db = InsertImagesToDataBase()
     db.insert_photos()
     db.insert_product_links()
-    # db.insert_spec_sheets()
+    db.insert_spec_sheets()
 
     # db.show_photo()
