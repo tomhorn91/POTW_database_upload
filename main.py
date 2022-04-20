@@ -109,7 +109,7 @@ product_links = {
         ['10048001005508'],
     'https://www.foodservicedirect.com/soup-du-jour': ['10068400002236',
                                                        '10068400001994',
-                                                       '10068400002342,'],
+                                                       '10068400002342'],
 }
 
 spec_sheets = {
@@ -140,6 +140,62 @@ spec_sheets = {
      'LeGout_Cream Soup Base _Selling Story_2078_English.pdf': ['10037500000329'],
 }
 
+free_sample_codes = {
+    '10048001014326': '0000-0000',
+    '10048001038537': '0000-0000',
+    '10048001761459': '0000-0000',
+    '10037500000329': '0000-0000',
+    '10048001005508': '0000-0000',
+    '10048001005829': '0000-0000',
+    '10048001010724': '0000-0000',
+    '10048001010731': '0000-0000',
+    '10048001013305': '0000-0000',
+    '10048001039091': '0000-0000',
+    '10048001145433': '0000-0000',
+    '10048001509655': '0000-0000',
+    '10048001145457': '0000-0000',
+    '10048001265308': '0000-0000',
+    '10048001265742': '0000-0000',
+    '10048001356969': '0000-0000',
+    '10048001357539': '0000-0000',
+    '10048001370491': '0000-0000',
+    '10048001370507': '0000-0000',
+    '10048001386737': '0000-0000',
+    '10048001503363': '0000-0000',
+    '10048001760452': '0000-0000',
+    '10068400001994': '0000-0000',
+    '10068400002236': '0000-0000',
+    '10068400002342': '0000-0000',
+}
+
+product_blurbs = {
+    '10048001014326': 'Product blurb',
+    '10048001038537': 'Product blurb',
+    '10048001761459': 'Product blurb',
+    '10037500000329': 'Product blurb',
+    '10048001005508': 'Product blurb',
+    '10048001005829': 'Product blurb',
+    '10048001010724': 'Product blurb',
+    '10048001010731': 'Product blurb',
+    '10048001013305': 'Product blurb',
+    '10048001039091': 'Product blurb',
+    '10048001145433': 'Product blurb',
+    '10048001509655': 'Product blurb',
+    '10048001145457': 'Product blurb',
+    '10048001265308': 'Product blurb',
+    '10048001265742': 'Product blurb',
+    '10048001356969': 'Product blurb',
+    '10048001357539': 'Product blurb',
+    '10048001370491': 'Product blurb',
+    '10048001370507': 'Product blurb',
+    '10048001386737': 'Product blurb',
+    '10048001503363': 'Product blurb',
+    '10048001760452': 'Product blurb',
+    '10068400001994': 'Product blurb',
+    '10068400002236': 'Product blurb',
+    '10068400002342': 'Product blurb',
+}
+
 create_table = '''
 -- auto-generated definition
 create table productoftheweek
@@ -155,7 +211,9 @@ create table productoftheweek
     productImage            longblob             null,
     youtubeLink             varchar(64)          null,
     specSheetImage          longblob             null,
-    productLink             varchar(128)         null,  
+    productLink             varchar(128)         null,
+    freeSampleCode          varchar(32)          null,  
+    productBlurb            varchar(256)         null,
     constraint productoftheweek_index_uindex
         unique (id)
 );
@@ -241,6 +299,18 @@ class InsertImagesToDataBase:
                     self.cursor.execute(query, (blob, gtin))
                     self.connection.commit()
 
+    def insert_free_sample_codes(self):
+        for k, v in free_sample_codes.items():
+            query = 'update productoftheweek set freeSampleCode = %s where gtin = %s;'
+            self.cursor.execute(query, (v, k))
+            self.connection.commit()
+
+    def insert_product_blurb(self):
+        for k, v in product_blurbs.items():
+            query = 'update productoftheweek set productBlurb = %s where gtin = %s;'
+            self.cursor.execute(query, (v, k))
+            self.connection.commit()
+
     def show_photo(self):
         self.cursor.execute('select productImage from productoftheweek where id = 27;')
         data = self.cursor.fetchall()
@@ -254,6 +324,8 @@ if __name__ == '__main__':
     db = InsertImagesToDataBase()
     db.insert_photos()
     db.insert_product_links()
+    db.insert_free_sample_codes()
     db.insert_spec_sheets()
+    db.insert_product_blurb()
 
     # db.show_photo()
