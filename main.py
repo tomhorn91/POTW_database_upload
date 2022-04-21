@@ -224,8 +224,9 @@ create table productoftheweek_samples
 (
     id                   int auto_increment
         primary key,
-    restaurantId         bigint      not null,
-    productOfTheWeekGtin varchar(64) not null,
+    restaurantId         bigint                    not null,
+    productOfTheWeekGtin varchar(64)               not null,
+    dateOrdered          date default '1999-01-01' not null,
     constraint productoftheweek_samples_id_uindex
         unique (id)
 );
@@ -276,7 +277,7 @@ class InsertImagesToDataBase:
             with open(photo, 'rb') as photo_file:
                 blob = photo_file.read()
                 self.cursor.execute(self.main_query, (
-                    item.product_name, item.gtin, item.product_brand, 'Unilever', blob, youtube_link))
+                    item.product_name, item.gtin, item.product_brand, 'Unilever Food Solutions', blob, youtube_link))
 
         self.connection.commit()
 
