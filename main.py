@@ -276,6 +276,7 @@ class InsertImagesToDataBase:
 
             with open(photo, 'rb') as photo_file:
                 blob = photo_file.read()
+                blob = base64.b64encode(blob)
                 self.cursor.execute(self.main_query, (
                     item.product_name, item.gtin, item.product_brand, 'Unilever Food Solutions', blob, youtube_link))
 
@@ -296,6 +297,7 @@ class InsertImagesToDataBase:
 
             with open(filename, 'rb') as photo_file:
                 blob = photo_file.read()
+                blob = base64.b64encode(blob)
                 for gtin in v:
                     self.cursor.execute(query, (blob, gtin))
                     self.connection.commit()
