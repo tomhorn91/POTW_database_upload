@@ -3,7 +3,9 @@ import io
 import mysql.connector
 from dataclasses import dataclass
 from pathlib import Path
-from PIL import Image
+
+
+# from PIL import Image
 
 
 @dataclass
@@ -11,33 +13,43 @@ class Product:
     gtin: str
     product_brand: str
     product_name: str
+    ad_name: str
 
 
-knorrSeafoodBase = Product('10048001014326', 'Knorr', 'Ultimate Seafood Liquid Concentrate Base')
-knorrCaldoBoullion = Product('10048001038537', 'Knorr', 'Shrimp Bouillon')
-knorrCaldoTomate = Product('10048001761459', 'Knorr', 'Tomato Bouillon With Chicken Flavor')
-leGoutCreamSoupBase = Product('10037500000329', 'Le Gout', 'Cream Soup Base')
-knorrBrownGravyMix = Product('10048001005508', 'Knorr', 'Brown Gravy Mix')
-knorrHollandaiseSauceMix = Product('10048001005829', 'Knorr', 'Hollandaise Sauce Mix')
-hellmansVeganMayo = Product('10048001010724', 'Hellman\'s', 'Vegan Dressing & Sandwich Spread')
-hellmansVeganMayo2 = Product('10048001010731', 'Best Foods', 'Vegan Dressing & Sandwich Spread')
-knorrAlfredoPastaSauceMix = Product('10048001013305', 'Knorr', 'Alfredo Pasta Sauce Mix')
-knorrBeefBoullon = Product('10048001039091', 'Knorr', 'Beef Flavor Bouillon')
-knorrChickenBase = Product('10048001145433', 'Knorr', 'Chicken Base')
-knorrBeefBase = Product('10048001509655', 'Knorr', 'Beef Base')
-knorrVegBase = Product('10048001145457', 'Knorr', 'Vegetable Base')
-hellmansMayoGallon = Product('10048001265308', 'Hellman\'s', 'Mayonnaise')
-bestFoodsMayoGallon = Product('10048001265742', 'Best Foods', 'Mayonnaise')
-hellmansMayoBottle = Product('10048001356969', 'Hellman\'s', 'Mayonnaise')
-bestFoodsMayoBottle = Product('10048001357539', 'Best Foods', 'Mayonnaise')
-hellmansMayoBottle2 = Product('10048001370491', 'Hellman\'s', 'Mayonnaise')
-bestFoodsMayoBottle2 = Product('10048001370507', 'Best Foods', 'Mayonnaise')
-knorrDemiGlaceMix = Product('10048001386737', 'Knorr', 'Demi-Glace Sauce Mix')
-knorrRoastedChickenBase = Product('10048001503363', 'Knorr', 'Roasted Chicken Base')
-knorrChickenBouillon = Product('10048001760452', 'Knorr', 'Chicken Bouillon')
-knorrButtNutSoup = Product('10068400001994', 'Knorr', 'Butternut Squash Soup Mix')
-knorrVegChiliMix = Product('10068400002236', 'Knorr', 'Three Bean Vegetable Chili Mix')
-knorrTomatoSoupMix = Product('10068400002342', 'Knorr', 'Tomato Bisque with Basil Soup Mix')
+knorrSeafoodBase = Product('10048001014326', 'Knorr', 'Ultimate Seafood Liquid Concentrate Base',
+                           'Knorr® Professional Liquid Concentrates')
+knorrCaldoBoullion = Product('10048001038537', 'Knorr', 'Shrimp Bouillon', 'Knorr® Professional Caldo')
+knorrCaldoTomate = Product('10048001761459', 'Knorr', 'Tomato Bouillon With Chicken Flavor',
+                           'Knorr® Professional Caldo')
+leGoutCreamSoupBase = Product('10037500000329', 'Le Gout', 'Cream Soup Base', 'LeGout® Cream Soup Base')
+knorrBrownGravyMix = Product('10048001005508', 'Knorr', 'Brown Gravy Mix', 'Knorr® Professional Brown Gravy')
+knorrHollandaiseSauceMix = Product('10048001005829', 'Knorr', 'Hollandaise Sauce Mix',
+                                   'Knorr® Professional Hollandaise')
+hellmansVeganMayo = Product('10048001010724', 'Hellman\'s', 'Vegan Dressing & Sandwich Spread',
+                            "Hellmann's® / Best Foods® Vegan Mayo")
+hellmansVeganMayo2 = Product('10048001010731', 'Best Foods', 'Vegan Dressing & Sandwich Spread',
+                             "Hellmann's® / Best Foods® Vegan Mayo")
+knorrAlfredoPastaSauceMix = Product('10048001013305', 'Knorr', 'Alfredo Pasta Sauce Mix',
+                                    'Knorr® Professional Alfredo (Just Add Water)')
+knorrBeefCaldo = Product('10048001039091', 'Knorr', 'Beef Flavor Bouillon', 'Knorr® Professional Caldo')
+knorrChickenBase = Product('10048001145433', 'Knorr', 'Chicken Base', 'Knorr® Professional Ultimate Bases')
+knorrBeefBase = Product('10048001509655', 'Knorr', 'Beef Base', 'Knorr® Professional Ultimate Bases')
+knorrVegBase = Product('10048001145457', 'Knorr', 'Vegetable Base', 'Knorr® Professional Ultimate Bases')
+hellmansMayoGallon = Product('10048001265308', 'Hellman\'s', 'Mayonnaise', r"Hellmann's® / Best Foods® Real Mayo")
+bestFoodsMayoGallon = Product('10048001265742', 'Best Foods', 'Mayonnaise', r"Hellmann's® / Best Foods® Real Mayo")
+hellmansMayoBottle = Product('10048001356969', 'Hellman\'s', 'Mayonnaise', r"Hellmann's® / Best Foods® Real Mayo")
+bestFoodsMayoBottle = Product('10048001357539', 'Best Foods', 'Mayonnaise', r"Hellmann's® / Best Foods® Real Mayo")
+hellmansMayoBottle2 = Product('10048001370491', 'Hellman\'s', 'Mayonnaise', r"Hellmann's® / Best Foods® Real Mayo")
+bestFoodsMayoBottle2 = Product('10048001370507', 'Best Foods', 'Mayonnaise', r"Hellmann's® / Best Foods® Real Mayo")
+knorrDemiGlaceMix = Product('10048001386737', 'Knorr', 'Demi-Glace Sauce Mix', 'Knorr® Professional Demi-Glace')
+knorrRoastedChickenBase = Product('10048001503363', 'Knorr', 'Roasted Chicken Base',
+                                  'Knorr® Professional Liquid Concentrates')
+knorrChickenCaldo = Product('10048001760452', 'Knorr', 'Chicken Bouillon', 'Knorr® Professional Caldo')
+knorrButtNutSoup = Product('10068400001994', 'Knorr', 'Butternut Squash Soup Mix', 'Knorr® Professional Soup du Jour')
+knorrVegChiliMix = Product('10068400002236', 'Knorr', 'Three Bean Vegetable Chili Mix',
+                           'Knorr® Professional Soup du Jour')
+knorrTomatoSoupMix = Product('10068400002342', 'Knorr', 'Tomato Bisque with Basil Soup Mix',
+                             'Knorr® Professional Soup du Jour')
 
 GTIN_TO_PRODUCT = {
     '10048001014326': knorrSeafoodBase,
@@ -49,7 +61,7 @@ GTIN_TO_PRODUCT = {
     '10048001010724': hellmansVeganMayo,
     '10048001010731': hellmansVeganMayo2,
     '10048001013305': knorrAlfredoPastaSauceMix,
-    '10048001039091': knorrBeefBoullon,
+    '10048001039091': knorrBeefCaldo,
     '10048001145433': knorrChickenBase,
     '10048001509655': knorrBeefBase,
     '10048001145457': knorrVegBase,
@@ -61,7 +73,7 @@ GTIN_TO_PRODUCT = {
     '10048001370507': bestFoodsMayoBottle2,
     '10048001386737': knorrDemiGlaceMix,
     '10048001503363': knorrRoastedChickenBase,
-    '10048001760452': knorrChickenBouillon,
+    '10048001760452': knorrChickenCaldo,
     '10068400001994': knorrButtNutSoup,
     '10068400002236': knorrVegChiliMix,
     '10068400002342': knorrTomatoSoupMix,
@@ -113,31 +125,31 @@ product_links = {
 }
 
 spec_sheets = {
-     'Best Foods_FOH Mayo_selling story_editable_210310_english.pdf': ['10048001265742',
-                                                                       '10048001357539',
-                                                                       '10048001370507'],
-     'HLMN_Vegan Mayo_Selling Story 1_editable_211101_english.pptx.pdf': ['10048001010724',
-                                                                          '10048001010731'],
-     'Knorr Professional_Alfredo Sauce Just Add Water_210910_English.pdf': ['10048001013305'],
-     'Knorr Professional_Caldo_Selling Story_2079_English.pdf': ['10048001038537',
-                                                                 '10048001759456',
-                                                                 '10048001760452',
-                                                                 '10048001039091',
-                                                                 '10048001761459'],
-     'Knorr Professional_Demi Glace_Selling Story_20714_English.pdf': ['10048001386737'],
-     'Knorr Professional_Hollandaise_ Selling Story _21915_English.pdf': ['10048001005829'],
-     'Knorr Professional_Liquid Concentrated Bases_Selling Story_20122_English.pdf': ['10048001145440',
-                                                                                      '10048001145433',
-                                                                                      '10048001014326',
-                                                                                      '10048001145457'],
-     'Knorr Professional_Selling Story_Gravies_Customizable_191218_English.pdf': ['10048001005508'],
-     'Knorr Professional_Soup du Jour_Selling Story_Customizable_210727_English.pdf.pdf': ['10068400002236',
-                                                                                           '10068400001994',
-                                                                                           '10068400002342'],
-     'Knorr Professional_Ultimate Bases_Selling Story_2079_English.pdf': ['10048001509655',
-                                                                          '10048001503363',
-                                                                          '10048001510170'],
-     'LeGout_Cream Soup Base _Selling Story_2078_English.pdf': ['10037500000329'],
+    'Best Foods_FOH Mayo_selling story_editable_210310_english.pdf': ['10048001265742',
+                                                                      '10048001357539',
+                                                                      '10048001370507'],
+    'HLMN_Vegan Mayo_Selling Story 1_editable_211101_english.pptx.pdf': ['10048001010724',
+                                                                         '10048001010731'],
+    'Knorr Professional_Alfredo Sauce Just Add Water_210910_English.pdf': ['10048001013305'],
+    'Knorr Professional_Caldo_Selling Story_2079_English.pdf': ['10048001038537',
+                                                                '10048001759456',
+                                                                '10048001760452',
+                                                                '10048001039091',
+                                                                '10048001761459'],
+    'Knorr Professional_Demi Glace_Selling Story_20714_English.pdf': ['10048001386737'],
+    'Knorr Professional_Hollandaise_ Selling Story _21915_English.pdf': ['10048001005829'],
+    'Knorr Professional_Liquid Concentrated Bases_Selling Story_20122_English.pdf': ['10048001145440',
+                                                                                     '10048001145433',
+                                                                                     '10048001014326',
+                                                                                     '10048001145457'],
+    'Knorr Professional_Selling Story_Gravies_Customizable_191218_English.pdf': ['10048001005508'],
+    'Knorr Professional_Soup du Jour_Selling Story_Customizable_210727_English.pdf.pdf': ['10068400002236',
+                                                                                          '10068400001994',
+                                                                                          '10068400002342'],
+    'Knorr Professional_Ultimate Bases_Selling Story_2079_English.pdf': ['10048001509655',
+                                                                         '10048001503363',
+                                                                         '10048001510170'],
+    'LeGout_Cream Soup Base _Selling Story_2078_English.pdf': ['10037500000329'],
 }
 
 free_sample_codes = {
@@ -214,6 +226,7 @@ create table productoftheweek
     productLink             varchar(128)         null,
     freeSampleCode          varchar(32)          null,  
     productBlurb            varchar(256)         null,
+    productGroupName        varchar(64)          null,
     constraint productoftheweek_index_uindex
         unique (id)
 );
@@ -222,11 +235,11 @@ create table productoftheweek
 create_sample_table = '''
 create table productoftheweek_samples
 (
-    id                   int auto_increment
+    id                          int auto_increment
         primary key,
-    restaurantId         bigint                    not null,
-    productOfTheWeekGtin varchar(64)               not null,
-    dateOrdered          date default '1999-01-01' not null,
+    restaurantId                bigint                    not null,
+    productOfTheWeekGroupName   varchar(64)               not null,
+    dateOrdered                 date default '1999-01-01' not null,
     constraint productoftheweek_samples_id_uindex
         unique (id)
 );
@@ -239,8 +252,8 @@ class InsertImagesToDataBase:
         self.cursor = self.connection.cursor()
         self.database = 'productoftheweek'
         self.main_query = 'insert into productoftheweek (productName, gtin, productBrand, distributorName, ' \
-                          'productImage, youtubeLink) ' \
-                          'values(%s, %s, %s, %s, %s, %s) '
+                          'productImage, youtubeLink, productGroupName) ' \
+                          'values(%s, %s, %s, %s, %s, %s, %s) '
 
         self.photos_dir = Path('POTW Front of Pack Shots')
         self.spec_sheet_dir = Path('spec_sheets')
@@ -278,7 +291,7 @@ class InsertImagesToDataBase:
                 blob = photo_file.read()
                 blob = base64.b64encode(blob)
                 self.cursor.execute(self.main_query, (
-                    item.product_name, item.gtin, item.product_brand, 'Unilever Food Solutions', blob, youtube_link))
+                    item.product_name, item.gtin, item.product_brand, 'Unilever Food Solutions', blob, youtube_link, item.ad_name))
 
         self.connection.commit()
 
@@ -314,13 +327,13 @@ class InsertImagesToDataBase:
             self.cursor.execute(query, (v, k))
             self.connection.commit()
 
-    def show_photo(self):
-        self.cursor.execute('select productImage from productoftheweek where id = 27;')
-        data = self.cursor.fetchall()
-        image = data[0][0]
-        binary_data = base64.b64decode(image)
-        image = Image.open(io.BytesIO(binary_data))
-        image.show()
+    # def show_photo(self):
+    #     self.cursor.execute('select productImage from productoftheweek where id = 27;')
+    #     data = self.cursor.fetchall()
+    #     image = data[0][0]
+    #     binary_data = base64.b64decode(image)
+    #     image = Image.open(io.BytesIO(binary_data))
+    #     image.show()
 
 
 if __name__ == '__main__':
