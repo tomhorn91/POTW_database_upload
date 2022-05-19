@@ -245,7 +245,6 @@ create table productoftheweek_samples
 );
 '''
 
-
 class InsertImagesToDataBase:
     def __init__(self):
         self.connection = self.get_connection()
@@ -256,6 +255,7 @@ class InsertImagesToDataBase:
                           'values(%s, %s, %s, %s, %s, %s, %s) '
 
         self.photos_dir = Path('POTW Front of Pack Shots')
+        self.stacked_photos_dir = Path(r'Stacked Images')
         self.spec_sheet_dir = Path('spec_sheets')
 
     @staticmethod

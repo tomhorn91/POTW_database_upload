@@ -17,84 +17,84 @@ class Product:
 
 bases = Product(1,
                 'Knorr® Professional Ultimate Bases',
-                Path('POTW Front of Pack Shots/10048001509655_C1C1_conversion1.jpg'),
+                Path(r'Stacked Images/bases.jpg'),
                 '0000-0000',
                 r"The workhorse of your kitchen, relying on real ingredients and flavor rather than salt.",
                 r'https://www.foodservicedirect.com/bases')
 
 cream_soup = Product(2,
                      'LeGout® Cream Soup Base',
-                     Path('POTW Front of Pack Shots/10037500000329_C1N1_conversion1.jpg'),
+                     Path(r'POTW Front of Pack Shots/10037500000329_C1N1_conversion1.jpg'),
                      '0000-0000',
                      r"Delivers consistently creamy flavor; the perfect foundation for a broad range of recipes.",
                      r'https://www.foodservicedirect.com/cream-soup-bases')
 
 small_mayo = Product(3,
                      "Hellmann's® / Best Foods® Real Mayo",
-                     Path('POTW Front of Pack Shots/10048001370491_C1N1_conversion1.jpg'),
+                     Path(r'Stacked Images/mayosqueeze.jpg'),
                      '0000-0000',
                      r"Show your guests that you care about quality, whether they dine onsite or at home.",
                      r'https://www.foodservicedirect.com/foh-mayo')
 
 big_mayo = Product(4,
                    "Hellmann's® / Best Foods® Real Mayo",
-                   Path('POTW Front of Pack Shots/10048001265308_C1C1_conversion1.jpg'),
+                   Path(r'Stacked Images/gallons.jpg'),
                    '0000-0000',
                    r"Provide the taste your guests love with the performance you can rely on.",
                    r'https://www.foodservicedirect.com/boh-mayo')
 
 vegan_mayo = Product(5,
                      "Hellmann's® / Best Foods® Vegan Mayo",
-                     Path('POTW Front of Pack Shots/10048001010724_C1C1_conversion1.jpg'),
+                     Path(r'Stacked Images/veganmayo.jpg'),
                      '0000-0000',
                      r"A multi-purpose, delicious, egg-free dressing for sandwiches, salads, and dipping sauces.",
                      r'https://www.foodservicedirect.com/vegan-mayo')
 
 alfredo = Product(6,
                   'Knorr Alfredo Sauce JAW 4 1.33lb',
-                  Path('POTW Front of Pack Shots/10048001013305_C1C1_conversion1.jpg'),
+                  Path(r'POTW Front of Pack Shots/10048001013305_C1C1_conversion1.jpg'),
                   '0000-0000',
                   r"A versatile sauce that will deliver on taste and performance.",
                   r'https://www.foodservicedirect.com/alfredo')
 
 caldo = Product(7,
                 'Knorr® Professional Caldo',
-                Path('POTW Front of Pack Shots/10048001039091_C1N1_conversion1.jpg'),
+                Path(r'Stacked Images/caldo.jpg'),
                 '0000-0000',
                 r"Add that authentic Latin flavor to your menu.",
                 r'https://www.foodservicedirect.com/caldo')
 
 demi_glace = Product(8,
                      'Knorr Demi Glace Sauce 4 1.75 lbs',
-                     Path('POTW Front of Pack Shots/10048001386737_C1C1_conversion1.jpg'),
+                     Path(r'POTW Front of Pack Shots/10048001386737_C1C1_conversion1.jpg'),
                      '0000-0000',
                      r"Delivers a perfect balance of beef, mirepoix, and tomato flavors.",
                      r'https://www.foodservicedirect.com/demi')
 
 hollandaise = Product(9,
                       'Knorr Ultimate Hollandaise Sauce 4 30.2z',
-                      Path('POTW Front of Pack Shots/10048001005829_C1C1_conversion1.jpg'),
+                      Path(r'POTW Front of Pack Shots/10048001005829_C1C1_conversion1.jpg'),
                       '0000-0000',
                       r"Serve scratch-like flavor without breaking or separating.",
                       r'https://www.foodservicedirect.com/hollandaise')
 
 conc_bases = Product(10,
                      'Knorr® Professional Liquid Concentrates',
-                     Path('POTW Front of Pack Shots/10048001145433_C1N1_conversion1.jpg'),
+                     Path(r'Stacked Images/lcb.jpg'),
                      '0000-0000',
                      r"Concentrated liquid base instantly creates broths and stocks with exceptional flavor, color, and aroma",
                      r'https://www.foodservicedirect.com/liquid-concentrated-bases')
 
 gravy = Product(11,
                 'Knorr® Professional Brown Gravy',
-                Path('POTW Front of Pack Shots/10048001005508_C1N1_conversion1.jpg'),
+                Path(r'POTW Front of Pack Shots/10048001005508_C1N1_conversion1.jpg'),
                 '0000-0000',
                 r"Combines vegetables and select seasonings to make a rich homemade tasting gravy.",
                 r'https://www.foodservicedirect.com/single-knorr-professional-brown-gravy-mix-6-83-ounce-1-each-23044361.html')
 
 soup = Product(12,
                'Knorr® Professional Soup du Jour',
-               Path('POTW Front of Pack Shots/10068400002236_C1C1_conversion1.jpg'),
+               Path(r'Stacked Images/soups.jpg'),
                '0000-0000',
                r"Consistently deliver scratch-like taste, on-trend flavors, and with the added convenience of a shelf stable format.",
                r'https://www.foodservicedirect.com/soup-du-jour')
